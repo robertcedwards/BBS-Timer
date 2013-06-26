@@ -1,0 +1,45 @@
+<html>
+<head>
+<script src="https://cdn.firebase.com/v0/firebase.js"></script>  
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>  
+<script type="text/javascript" src="http://hiroshi.github.io/knockoutFire/knockoutfire-0.0.4.js"></script>
+<link rel="stylesheet" type="text/css" href="css/normalize.css">
+
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+<body>
+<div id="items">
+<ul data-bind="foreach: items">
+  <li>
+      <input type="text" data-bind="value: content, valueUpdate: 'keyup'"/> 
+      <a data-bind="click: $parent.removeItem" href="#">[x]</a>
+  </li>
+</ul>
+<!-- ko with: items.newItem -->
+<form data-bind="submit: create">
+    <input data-bind="value: content" />
+    <button type="submit">push</button>
+</form>
+<!-- /ko -->
+</div>
+<script>
+var firebase = new Firebase("https://hit.firebaseio.com/items/");
+var viewModel = {
+    "items": KnockoutFire.observable(
+        firebase, {
+            "$item": {
+                "content": true
+            },
+            ".newItem": {
+                ".priority": function() { return Date.now() }
+            }
+        }
+    ),
+    "removeItem": function(item) {
+        firebase.child(item.firebase.name()).remove();
+    }
+};
+ko.applyBindings(viewModel, document.getElementById("items"));</script>
+</body>
+<html>
