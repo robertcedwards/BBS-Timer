@@ -21,7 +21,7 @@
 <form data-bind="submit: create">
     <input data-bind="value: content" />
     <button type="submit">yea buddy</button>
-    <p><a href="javascript:login('twitter');">Login with Twitter &raquo;</a></p>
+    <p><a href="authClient.login('twitter', {rememberMe: true});">Login with Twitter &raquo;</a></p>
 
 </form>
 <!-- /ko -->
@@ -39,13 +39,14 @@ var authClient = new FirebaseAuthClient(chatRef, function(error, user) {
 
 
   }
+var firebase = new Firebase("https://hit.firebaseio.com/" + user.id);
+
 });
  function login(provider) {
       authClient.login(provider);
     }
-</script>
-<script>
-var firebase = new Firebase("https://hit.firebaseio.com/items/");
+
+
 var viewModel = {
     "items": KnockoutFire.observable(
         firebase, {
