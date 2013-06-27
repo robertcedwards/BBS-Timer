@@ -1,9 +1,10 @@
 <html>
 <head>
-<script src="https://cdn.firebase.com/v0/firebase.js"></script>  
+<script src="https://cdn.firebase.com/v0/firebase.js"></script>
+<script type="text/javascript" src="https://cdn.firebase.com/v0/firebase-auth-client.js"></script>  
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>  
 <script type="text/javascript" src="http://hiroshi.github.io/knockoutFire/knockoutfire-0.0.4.js"></script>
-<link rel="stylesheet" type="text/css" href="css/normalize.css">
+<link rel="stylesheet" type="text/css" href="normalize.css">
 
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
@@ -19,10 +20,30 @@
 <!-- ko with: items.newItem -->
 <form data-bind="submit: create">
     <input data-bind="value: content" />
-    <button type="submit">push</button>
+    <button type="submit">yea buddy</button>
+    <p><a href="javascript:login('twitter');">Login with Twitter &raquo;</a></p>
+
 </form>
 <!-- /ko -->
 </div>
+<script>
+  var chatRef = new Firebase('https://hit.firebaseIO.com');
+var authClient = new FirebaseAuthClient(chatRef, function(error, user) {
+  if (error) {
+    // an error occurred while attempting login
+    console.log(error);
+  } else if (user) {
+    // user authenticated with Firebase
+    console.log('User ID: ' + user.id + ', Provider: ' + user.provider);
+  } else {
+
+
+  }
+});
+ function login(provider) {
+      authClient.login(provider);
+    }
+</script>
 <script>
 var firebase = new Firebase("https://hit.firebaseio.com/items/");
 var viewModel = {
