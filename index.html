@@ -1,6 +1,6 @@
 <html>
 <head>
-<script src="https://cdn.firebase.com/v0/firebase.js"></script>
+<script type="text/javascript" src="https://cdn.firebase.com/v0/firebase.js"></script>
 <script type="text/javascript" src="https://cdn.firebase.com/v0/firebase-auth-client.js"></script>  
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>  
 <script type="text/javascript" src="http://hiroshi.github.io/knockoutFire/knockoutfire-0.0.4.js"></script>
@@ -34,16 +34,19 @@ var authClient = new FirebaseAuthClient(chatRef, function(error, user) {
   } else if (user) {
     // user authenticated with Firebase
     console.log('User ID: ' + user.id + ', Provider: ' + user.provider);
+    var firebase = new Firebase("https://hit.firebaseio.com/" + user.id);
+    
+
   } else {
 
 
   }
-var firebase = new Firebase("https://hit.firebaseio.com/" + user.id);
 
 });
  function login(provider) {
       authClient.login(provider);
     }
+    var firebase = new Firebase("https://hit.firebaseio.com/" + user.id);
 
 
 var viewModel = {
